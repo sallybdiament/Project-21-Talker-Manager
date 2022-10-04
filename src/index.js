@@ -28,9 +28,14 @@ app.get('/talker', async (req, res) => {
 app.get('/talker/:id', async (req, res) => {
   const { id } = req.params;
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
-  const checkedId = talkers.some((talker) => talker.id === id - 1);
-  if (!checkedId) {
+  const checkedId = talkers.filter((talker) => talker.id === +id);
+  console.log(checkedId);
+  if (checkedId.length === 0) {
 return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
   }
  return res.status(200).json(talkers[id - 1]);
 });
+
+// app.post('/login', generate async (req, res) => {
+
+// });
