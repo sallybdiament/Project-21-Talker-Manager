@@ -23,7 +23,7 @@ app.listen(PORT, () => {
 app.get('/talker', async (req, res) => {
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
   res.status(HTTP_OK_STATUS).json(talkers);
-})
+});
 
 // app.get('/talker/:id', async (req, res) => {
 //   const { id } = req.params;
