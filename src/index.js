@@ -2,6 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const fs = require('fs').promises;
 const path = require('path');
+const generateToken = require('./generateToken');
 
 const pathTalker = path.resolve(__dirname, 'talker.json');
 
@@ -36,6 +37,11 @@ return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
  return res.status(200).json(talkers[id - 1]);
 });
 
-// app.post('/login', generate async (req, res) => {
-
-// });
+app.post('/login', async (req, res) => {
+const { email, password } = req.body;
+if ([email, password].includes(undefined)) {
+  return res.status(401).json({ message: 'Campos ausentes!' });
+}
+const token = generateToken();
+return res.status(200).json({ token });
+});
