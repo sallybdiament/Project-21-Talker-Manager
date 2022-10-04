@@ -25,20 +25,12 @@ app.get('/talker', async (req, res) => {
   res.status(HTTP_OK_STATUS).json(talkers);
 });
 
-// app.get('/talker/:id', async (req, res) => {
-//   const { id } = req.params;
-//   const { name, age, talk } = req.body;
-//   let selectedTalker;
-
-//   for (let i = 0; i < teams.length; i += 1) {
-//     const team = teams[i];
-
-//     if (team.id === Number(id)) {
-//       team.name = name;
-//       team.initials = initials;
-//       updatedTeam = team;
-//     }
-//   }
-
-//   res.status(200).json({ updatedTeam });
-// })
+app.get('/talker/:id', async (req, res) => {
+  const { id } = req.params;
+  const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
+  const checkedId = talkers.some((talker) => talker.id === id - 1);
+  if (!checkedId) {
+return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+  }
+ return res.status(200).json(talkers[id - 1]);
+});
