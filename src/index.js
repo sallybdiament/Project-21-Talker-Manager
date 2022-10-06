@@ -71,7 +71,7 @@ validateRate, async (req, res) => {
   // const { name, age, talk } = req.body;
   // let updatedTalker;
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
-  const index = talkers.findIndex((item) => item.id === parseInte(id));
+  const index = talkers.findIndex((item) => item.id === parseInt(id));
   talkers[index] = talker;
   // for (let i = 0; i < talkers.length; i += 1) {
   //   const talker = talkers[i];
@@ -83,7 +83,7 @@ validateRate, async (req, res) => {
   //   }
   // }
   await fs.writeFile(pathTalker, JSON.stringify(talkers));
-  res.status(200).json(updatedTalker);
+  res.status(200).json(talker);
 });
 
 app.delete('/talker/:id', validateToken, async (req, res) => {
