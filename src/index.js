@@ -69,7 +69,7 @@ validateRate, async (req, res) => {
   const { id } = req.params;
   const talker = { ...req.body };
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
-  const index = talkers.findIndex((item) => item.id === parseInt(id));
+  const index = talkers.findIndex((item) => item.id === +(id));
   talker.id = +(id);
   talkers[index] = talker;
   await fs.writeFile(pathTalker, JSON.stringify(talkers));
