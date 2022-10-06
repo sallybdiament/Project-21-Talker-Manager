@@ -68,20 +68,10 @@ validateAge, validateTalk, validateWatchedAt,
 validateRate, async (req, res) => {
   const { id } = req.params;
   const talker = { ...req.body };
-  // const { name, age, talk } = req.body;
-  // let updatedTalker;
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
   const index = talkers.findIndex((item) => item.id === parseInt(id));
+  talker.id = +(id);
   talkers[index] = talker;
-  // for (let i = 0; i < talkers.length; i += 1) {
-  //   const talker = talkers[i];
-  //   if (talker.id === Number(id)) {
-  //     talker.name = name;
-  //     talker.age = age;
-  //     talker.talk = talk;
-  //     updatedTalker = talker;
-  //   }
-  // }
   await fs.writeFile(pathTalker, JSON.stringify(talkers));
   res.status(200).json(talker);
 });
