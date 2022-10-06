@@ -56,9 +56,10 @@ validateName, validateAge, validateTalk,
 validateWatchedAt, validateRate, async (req, res) => {
   const talker = { ...req.body };
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
+  talker.id = talkers.length + 1;
   talkers.push(talker);
   await fs.writeFile(pathTalker, JSON.stringify(talkers));
-  res.status(201).json(talkers);
+  res.status(201).json(talker);
 });
 
 app.put('/talker/:id', 
@@ -69,22 +70,24 @@ validateRate, async (req, res) => {
   const { name, age, talk } = req.body;
   let updatedTalker;
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
-  for (let i = 0; i < talkers.length; i += 1) {
-    const talker = talkers[i];
-    if (talker.id === Number(id)) {
-      talker.name = name;
-      talker.age = age;
-      talker.talk = talk;
-      updatedTalker = talker;
-    }
-  }
-  res.status(201).json(updatedTalker);
+  // for (let i = 0; i < talkers.length; i += 1) {
+  //   const talker = talkers[i];
+  //   if (talker.id === Number(id)) {
+  //     talker.name = name;
+  //     talker.age = age;
+  //     talker.talk = talk;
+  //     updatedTalker = talker;
+  //   }
+  // }
+  await fs.writeFile(pathTalker, JSON.stringify(talkers));
+  res.status(200).json(updatedTalker);
 });
 
-app.delete('/talker:id', validateToken, async (req, res) => {
+app.delete('/talker/:id', validateToken, async (req, res) => {
   const { id } = req.params;
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
   const arrayPosition = talkers.findIndex((talker) => talker.id === Number(id));
   talkers.splice(arrayPosition, 1);
+  await fs.writeFile(pathTalker, JSON.stringify(talkers));
   res.status(204).end();
 });
