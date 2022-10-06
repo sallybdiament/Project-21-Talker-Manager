@@ -4,7 +4,12 @@ const fs = require('fs').promises;
 const path = require('path');
 const generateToken = require('./generateToken');
 const { emailValidation, passwordValidation, emailValidationFormat } = require('./auth');
-const { validateToken, validateName, validateAge, validateTalk, validateWatchedAt, validateRate } = require('./validations');
+const { validateToken, 
+  validateName, 
+  validateAge, 
+  validateTalk, 
+  validateWatchedAt, 
+  validateRate } = require('./validations');
 
 const pathTalker = path.resolve(__dirname, 'talker.json');
 
@@ -39,12 +44,16 @@ app.get('/talker/:id', async (req, res) => {
   return res.status(200).json(talkers[id - 1]);
 });
 
-app.post('/login', emailValidation, passwordValidation, emailValidationFormat, async (req, res) => {
+app.post('/login', emailValidation,
+passwordValidation,
+emailValidationFormat, async (req, res) => {
   const token = generateToken();
   return res.status(200).json({ token });
 });
 
-app.post('/talker', validateToken, validateName, validateAge, validateTalk, validateWatchedAt, validateRate,  async (req, res) => {
+app.post('/talker', validateToken, 
+validateName, validateAge, validateTalk, 
+validateWatchedAt, validateRate, async (req, res) => {
   const talker = { ...req.body };
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
   talkers.push(talker);
@@ -52,7 +61,10 @@ app.post('/talker', validateToken, validateName, validateAge, validateTalk, vali
   res.status(201).json(talkers);
 });
 
-app.put('/talker/:id', validateToken, validateName, validateAge, validateTalk, validateWatchedAt, validateRate,  async (req, res) => {
+app.put('/talker/:id', 
+validateToken, validateName, 
+validateAge, validateTalk, validateWatchedAt, 
+validateRate, async (req, res) => {
   const { id } = req.params;
   const { name, age, talk } = req.body;
   let updatedTalker;
@@ -66,12 +78,10 @@ app.put('/talker/:id', validateToken, validateName, validateAge, validateTalk, v
       updatedTalker = talker;
     }
   }
-  
   res.status(201).json(updatedTalker);
-
 });
 
-app.delete('/talker:id', validateToken, async(req, res) => {
+app.delete('/talker:id', validateToken, async (req, res) => {
   const { id } = req.params;
   const talkers = JSON.parse(await fs.readFile(pathTalker, 'utf8'));
   const arrayPosition = talkers.findIndex((talker) => talker.id === Number(id));
