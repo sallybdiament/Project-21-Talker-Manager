@@ -7,7 +7,7 @@ Projeto 22 da [Trybe](https://wwww.betrybe.com), módulo de Back-End.
 
 ## O Projeto
 
-#### 1. Criação de Rotas de Produtos:
+#### Criação de Rotas:
    - Listar palestrantes (talkers): endpoints GET `/talker` e `/talker/:id`.
    - Cadastrar usuário (login): endpoint POST `/login`, com validações.
    - Cadastrar palestrante: endpoint POST `/talker`, com validações de token de login e de informações da requisição.
