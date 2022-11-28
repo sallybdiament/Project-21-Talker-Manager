@@ -29,12 +29,10 @@ Projeto 22 da [Trybe](https://wwww.betrybe.com), módulo de Back-End.
 ```npm run dev```
 
 #### Caso não tenha Node instalado, é possível iniciar com o Docker:
-- Na raíz do projeto: ```docker-compose up -d```
-- Abrir o terminal do container: ```docker exec -it store_manager bash```
-- Rodar o comando: ```npm install```
+Na raíz do projeto: ```docker-compose up -d```
+Abrir o terminal do container: ```docker exec -it store_manager bash```
+Rodar o comando: ```npm install```
 
-
-#### \*Foi utilizado o Thunder Client como cliente de requisições HTTP\*
 
 ## Habilidades:
 - Entender a diferença entre execução síncrona e assíncrona;
